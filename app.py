@@ -1,3 +1,4 @@
+import os
 from __future__ import annotations
 
 from dataclasses import asdict, dataclass
@@ -5,7 +6,7 @@ from datetime import date, datetime, timedelta
 from typing import List
 
 import matplotlib
-matplotlib.use("Agg")  # чтобы matplotlib не открывал окна на сервере
+matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import streamlit as st
 from sqlalchemy import Column, Float, String, Text, create_engine
@@ -14,12 +15,6 @@ from sqlalchemy.orm import declarative_base, sessionmaker
 # ==========================================
 # НАСТРОЙКИ БД
 # ==========================================
-# import os
-
-# ==========================================
-# НАСТРОЙКИ БД
-# ==========================================
-# Определяем полный путь к папке, где лежит файл app.py
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 DB_PATH = os.path.join(BASE_DIR, "daily_routine.db")
 
@@ -80,7 +75,6 @@ def load_records() -> List[DailyRecord]:
 
 
 def upsert_record(rec: DailyRecord) -> None:
-    """Вставляет новую запись или обновляет существующую по дате."""
     session = Session()
     try:
         existing = session.get(RecordDB, rec.day)
