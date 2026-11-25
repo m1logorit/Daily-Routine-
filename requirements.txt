@@ -1,3 +1,6 @@
 streamlit
 matplotlib
 sqlalchemy
+streamlit-calendar
+streamlit-lottie
+requests
