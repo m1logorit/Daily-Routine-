@@ -1,4 +1,3 @@
-import os
 from __future__ import annotations
 
 from dataclasses import asdict, dataclass
@@ -15,19 +14,19 @@ from sqlalchemy.orm import declarative_base, sessionmaker
 # ==========================================
 # НАСТРОЙКИ БД
 # ==========================================
-# По умолчанию — SQLite (работает сразу, без настройки).
-# Для постоянного хранения на Streamlit Cloud добавьте в Secrets:
-#   database_url = "postgresql://user:pass@host:5432/dbname"
-# и добавьте psycopg2-binary в requirements.txt
-try:
-    # Определяем полный путь к папке, где лежит файл app.py
+# import os
+
+# ==========================================
+# НАСТРОЙКИ БД
+# ==========================================
+# Определяем полный путь к папке, где лежит файл app.py
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 DB_PATH = os.path.join(BASE_DIR, "daily_routine.db")
 
 try:
     DB_URL = st.secrets["database_url"]
 except Exception:
-    DB_URL = f"sqlite:///{DB_PATH}"  # Используем полный путь
+    DB_URL = f"sqlite:///{DB_PATH}"
 
 connect_args = {"check_same_thread": False} if DB_URL.startswith("sqlite") else {}
 engine = create_engine(DB_URL, connect_args=connect_args)
